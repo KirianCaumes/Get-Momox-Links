@@ -11,24 +11,16 @@
         <div class="content">
             <br />
             <h1 class="title">Search on Momox</h1>
-            <div class="field">
-                <label class="label" for="string">String to search on Momox</label>
+            <label class="label" for="string">String to search on Momox</label>
+            <div class="field has-addons">
                 <div class="control">
-                    <input class="input" type="text" name="string" id="string">
+                    <input class="input" type="text" name="string" id="string" onkeyup="run()" >
                 </div>
-            </div>
-
-            <div class="field is-grouped">
-                <p class="control">
-                    <button class="button is-primary" onclick="run()">
-                        Go
-                    </button>
-                </p>
-                <p class="control">
-                    <button class="button is-light" onclick="openlinks()" id="openlinks" disabled>
+                <div class="control">
+                    <button class="button is-primary" onclick="openlinks()" id="openlinks" disabled>
                         Open All
                     </button>
-                </p>
+                </div>
             </div>
 
             <h2 class="subtitle">Results:</h2>
@@ -52,12 +44,12 @@
     function run() {
         const search = document.querySelector("input#string").value
         if (search) {
-            document.querySelector('#momox-link a').href = `https://www.momox-shop.fr/produits-C0/?listorder=asc&listorderby=oxvarminprice&mxShowOutOfStock=1&searchparam=${search}`
+            document.querySelector('#momox-link a').href = `https://www.momox-shop.fr/produits-C0/?listorder=asc&listorderby=oxvarminprice&searchparam=${search}`
             document.querySelector('#medimops-link a').href = `https://www.medimops.de/produkte-C0/?listorder=asc&listorderby=oxvarminprice&fcIsSearch=1&searchparam=${search}`
             document.querySelector('#ebay-link a').href = `https://www.ebay.fr/sch/m.html?_ssn=momox&_nkw=${search}&_sop=15`
             document.querySelector('#fnac-link a').href = `https://www.fnac.com/momox/sref56709E07-6A79-B840-04FC-959AADEC4F19?ItemPerPage=20&PageIndex=1&Search=${search}&ssi=5&sso=1`
             document.querySelector('#rakuten-link a').href = `https://fr.shopping.rakuten.com/boutique/momox/kw/${search}`
-            document.querySelector('#amazon-link a').href = `https://www.amazon.fr/s?k=${search}`
+            document.querySelector('#amazon-link a').href = `https://www.amazon.fr/s?k=${search}&me=AAD2QYB78YYT9`
 
             document.querySelector('button#openlinks').disabled = false
         } else {
