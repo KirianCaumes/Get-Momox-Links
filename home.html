@@ -65,7 +65,7 @@
     }
 
     function openlinks() {
-        document.querySelectorAll('a').forEach(el => window.open(el.href, '_blank'))
+        document.querySelectorAll('li[id*="-link"] a').forEach(el => window.open(el.href, '_blank'))
     }
 
 </script>
