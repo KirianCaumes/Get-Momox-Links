@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <title>Search on Momox</title>
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"> -->
+    <link href="https://unpkg.com/bulmaswatch/darkly/bulmaswatch.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <br />
+            <h1 class="title">Search on Momox</h1>
+            <div class="field">
+                <label class="label" for="string">String to search on Momox</label>
+                <div class="control">
+                    <input class="input" type="text" name="string" id="string">
+                </div>
+            </div>
+
+            <div class="field is-grouped">
+                <p class="control">
+                    <button class="button is-primary" onclick="run()">
+                        Go
+                    </button>
+                </p>
+                <p class="control">
+                    <button class="button is-light" onclick="openlinks()" id="openlinks" disabled>
+                        Open All
+                    </button>
+                </p>
+            </div>
+
+            <h2 class="subtitle">Results:</h2>
+            <ul>
+                <li id="momox-link"><a target="_blank">momox-shop.fr</a></li>
+                <li id="medimops-link"><a target="_blank">medimops.de</a></li>
+                <li id="ebay-link"><a target="_blank">ebay.fr</a></li>
+                <li id="fnac-link"><a target="_blank">fnac.com</a></li>
+                <li id="rakuten-link"><a target="_blank">fr.shopping.rakuten.com</a></li>
+                <li id="amazon-link"><a target="_blank">amazon.fr</a></li>
+            </ul>
+            <br />
+            <p>
+                By <a href="https://kiriancaumes.fr" target="_blank">Kirian CAUMES</a> - <a
+                    href="https://github.com/KirianCaumes/DiscogsCompareTwoCollection" target="_blank">Github</a>
+            </p>
+        </div>
+    </div>
+</body>
+<script>
+    function run() {
+        const search = document.querySelector("input#string").value
+        if (search) {
+            document.querySelector('#momox-link a').href = `https://www.momox-shop.fr/produits-C0/?listorder=asc&listorderby=oxvarminprice&mxShowOutOfStock=1&searchparam=${search}`
+            document.querySelector('#medimops-link a').href = `https://www.medimops.de/produkte-C0/?listorder=asc&listorderby=oxvarminprice&fcIsSearch=1&searchparam=${search}`
+            document.querySelector('#ebay-link a').href = `https://www.ebay.fr/sch/m.html?_ssn=momox&_nkw=${search}&_sop=15`
+            document.querySelector('#fnac-link a').href = `https://www.fnac.com/momox/sref56709E07-6A79-B840-04FC-959AADEC4F19?ItemPerPage=20&PageIndex=1&Search=${search}&ssi=5&sso=1`
+            document.querySelector('#rakuten-link a').href = `https://fr.shopping.rakuten.com/boutique/momox/kw/${search}`
+            document.querySelector('#amazon-link a').href = `https://www.amazon.fr/s?k=${search}`
+
+            document.querySelector('button#openlinks').disabled = false
+        } else {
+            document.querySelector('#momox-link a').removeAttribute('href')
+            document.querySelector('#medimops-link a').removeAttribute('href')
+            document.querySelector('#ebay-link a').removeAttribute('href')
+            document.querySelector('#fnac-link a').removeAttribute('href')
+            document.querySelector('#rakuten-link a').removeAttribute('href')
+            document.querySelector('#amazon-link a').removeAttribute('href')
+
+            document.querySelector('button#openlinks').disabled = true
+        }
+    }
+
+    function openlinks() {
+        document.querySelectorAll('a').forEach(el => window.open(el.href, '_blank'))
+    }
+
+</script>
+
+</html>
