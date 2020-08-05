@@ -48,7 +48,7 @@
         momox: `https://momox-shop.fr/produits-C0/?listorder=asc&listorderby=oxvarminprice&searchparam=${str}`,
         medimops: `https://medimops.de/produkte-C0/?listorder=asc&listorderby=oxvarminprice&fcIsSearch=1&searchparam=${str}`,
         ebay: `https://ebay.fr/sch/m.html?_ssn=momox&_nkw=${str}&_sop=15`,
-        fnac: `https://fnac.com/momox/sref56709E07-6A79-B840-04FC-959AADEC4F19?ItemPerPage=20&PageIndex=1&Search=${str}&ssi=5&sso=1`,
+        fnac: `https://www.fnac.com/momox/sref56709E07-6A79-B840-04FC-959AADEC4F19?ItemPerPage=20&PageIndex=1&Search=${str}&ssi=5&sso=1`,
         rakuten: `https://fr.shopping.rakuten.com/boutique/momox/kw/${str}`,
         amazon: `https://amazon.fr/s?k=${str}&me=AAD2QYB78YYT9`
     })
@@ -60,7 +60,7 @@
     const getHostname = url => {
         const a = document.createElement('a')
         a.href = url
-        return a.hostname
+        return a.hostname.replace('www.', '')
     }
 
     /** List of links to initialize */
