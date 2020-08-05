@@ -2,7 +2,6 @@
 
 <head>
     <title>Search on Momox</title>
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"> -->
     <link href="https://unpkg.com/bulmaswatch/darkly/bulmaswatch.min.css" rel="stylesheet">
 </head>
 
@@ -10,29 +9,29 @@
     <div class="container">
         <div class="content">
             <br />
+
             <h1 class="title">Search on Momox</h1>
-            <label class="label" for="string">String to search on Momox</label>
-            <div class="field has-addons">
-                <div class="control">
-                    <input class="input" type="text" name="string" id="string" onkeyup="run()" >
+
+            <form>
+                <label class="label" for="string">String to search on Momox</label>
+                <div class="field has-addons">
+                    <div class="control">
+                        <input class="input" type="text" name="string" id="string">
+                    </div>
+                    <div class="control">
+                        <button type="button" class="button is-primary" id="openlinks" disabled>
+                            Open All
+                        </button>
+                    </div>
                 </div>
-                <div class="control">
-                    <button class="button is-primary" onclick="openlinks()" id="openlinks" disabled>
-                        Open All
-                    </button>
-                </div>
-            </div>
+            </form>
 
             <h2 class="subtitle">Results:</h2>
-            <ul>
-                <li id="momox-link"><a target="_blank">momox-shop.fr</a></li>
-                <li id="medimops-link"><a target="_blank">medimops.de</a></li>
-                <li id="ebay-link"><a target="_blank">ebay.fr</a></li>
-                <li id="fnac-link"><a target="_blank">fnac.com</a></li>
-                <li id="rakuten-link"><a target="_blank">fr.shopping.rakuten.com</a></li>
-                <li id="amazon-link"><a target="_blank">amazon.fr</a></li>
-            </ul>
+
+            <ul></ul>
+
             <br />
+
             <p>
                 By <a href="https://kiriancaumes.fr" target="_blank">Kirian CAUMES</a> - <a
                     href="https://github.com/KirianCaumes/Get-Momox-Links" target="_blank">Github</a>
@@ -41,33 +40,61 @@
     </div>
 </body>
 <script>
-    function run() {
-        const search = document.querySelector("input#string").value
-        if (search) {
-            document.querySelector('#momox-link a').href = `https://www.momox-shop.fr/produits-C0/?listorder=asc&listorderby=oxvarminprice&searchparam=${search}`
-            document.querySelector('#medimops-link a').href = `https://www.medimops.de/produkte-C0/?listorder=asc&listorderby=oxvarminprice&fcIsSearch=1&searchparam=${search}`
-            document.querySelector('#ebay-link a').href = `https://www.ebay.fr/sch/m.html?_ssn=momox&_nkw=${search}&_sop=15`
-            document.querySelector('#fnac-link a').href = `https://www.fnac.com/momox/sref56709E07-6A79-B840-04FC-959AADEC4F19?ItemPerPage=20&PageIndex=1&Search=${search}&ssi=5&sso=1`
-            document.querySelector('#rakuten-link a').href = `https://fr.shopping.rakuten.com/boutique/momox/kw/${search}`
-            document.querySelector('#amazon-link a').href = `https://www.amazon.fr/s?k=${search}&me=AAD2QYB78YYT9`
+    /**
+     * Get list of links
+     * @param {string} str Search params to set
+     */
+    const data = (str = '') => ({
+        momox: `https://momox-shop.fr/produits-C0/?listorder=asc&listorderby=oxvarminprice&searchparam=${str}`,
+        medimops: `https://medimops.de/produkte-C0/?listorder=asc&listorderby=oxvarminprice&fcIsSearch=1&searchparam=${str}`,
+        ebay: `https://ebay.fr/sch/m.html?_ssn=momox&_nkw=${str}&_sop=15`,
+        fnac: `https://fnac.com/momox/sref56709E07-6A79-B840-04FC-959AADEC4F19?ItemPerPage=20&PageIndex=1&Search=${str}&ssi=5&sso=1`,
+        rakuten: `https://fr.shopping.rakuten.com/boutique/momox/kw/${str}`,
+        amazon: `https://amazon.fr/s?k=${str}&me=AAD2QYB78YYT9`
+    })
 
-            document.querySelector('button#openlinks').disabled = false
-        } else {
-            document.querySelector('#momox-link a').removeAttribute('href')
-            document.querySelector('#medimops-link a').removeAttribute('href')
-            document.querySelector('#ebay-link a').removeAttribute('href')
-            document.querySelector('#fnac-link a').removeAttribute('href')
-            document.querySelector('#rakuten-link a').removeAttribute('href')
-            document.querySelector('#amazon-link a').removeAttribute('href')
-
-            document.querySelector('button#openlinks').disabled = true
-        }
+    /**
+     * Extract hostname from url
+     * @param {string} url Url 
+     */
+    const getHostname = url => {
+        const a = document.createElement('a')
+        a.href = url
+        return a.hostname
     }
 
-    function openlinks() {
-        document.querySelectorAll('li[id*="-link"] a').forEach(el => window.open(el.href, '_blank'))
+    /** List of links to initialize */
+    const links = { ...data() }
+
+    /** Initialize links */
+    for (const key in links) {
+        const li = document.createElement('li')
+        const a = document.createElement('a')
+        a.target = "_blank"
+        a.textContent = getHostname(links[key])
+        li.id = `${key}-link`
+        li.appendChild(a)
+        document.querySelector('ul').appendChild(li)
     }
 
+    /** Callback when a keyup on input */
+    document.querySelector('input#string').addEventListener('keyup', ev => {
+        const str = ev.target.value
+        const links = { ...data(str) }
+
+        for (const key in links) !!str ? document.querySelector(`#${key}-link a`).href = links[key] : document.querySelector(`#${key}-link a`).removeAttribute('href')
+
+        document.querySelector('button#openlinks').disabled = !str
+    })
+
+    /** Callback when button is clicked */
+    document.querySelector('button#openlinks').addEventListener('click', () => document.querySelectorAll('li[id*="-link"] a').forEach(el => window.open(el.href, '_blank')))
+
+    /** Callback when form is submitted */
+    document.querySelector('form').addEventListener('submit', ev => {
+        ev.preventDefault()
+        document.querySelector('button#openlinks').click()
+    })
 </script>
 
 </html>
