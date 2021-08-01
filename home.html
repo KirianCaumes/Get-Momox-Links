@@ -3,6 +3,8 @@
 <head>
     <title>Search on Momox</title>
     <link href="https://unpkg.com/bulmaswatch/darkly/bulmaswatch.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
 <body>
@@ -77,8 +79,8 @@
         document.querySelector('ul').appendChild(li)
     }
 
-    /** Callback when a keyup on input */
-    document.querySelector('input#string').addEventListener('keyup', ev => {
+    /** Callback when a change on input */
+    document.querySelector('input#string').addEventListener('input', ev => {
         const str = ev.target.value
         const links = { ...data(str) }
 
