@@ -12,7 +12,7 @@
         <div class="content">
             <br />
 
-            <h1 class="title">Search on Momox</h1>
+            <h1 class="title">Search on Momox (France 🇫🇷)</h1>
 
             <form>
                 <label class="label" for="string">String to search on Momox</label>
@@ -35,8 +35,7 @@
             <br />
 
             <p>
-                By <a href="https://kiriancaumes.fr" target="_blank">Kirian CAUMES</a> - <a
-                    href="https://github.com/KirianCaumes/Get-Momox-Links" target="_blank">Github</a>
+                By <a href="https://kiriancaumes.fr" target="_blank">Kirian CAUMES</a> - <a href="https://github.com/KirianCaumes/Get-Momox-Links" target="_blank">Github</a>
             </p>
         </div>
     </div>
@@ -50,7 +49,7 @@
         momox: `https://momox-shop.fr/produits-C0/?listorder=asc&listorderby=oxvarminprice&searchparam=${str}`,
         medimops: `https://medimops.de/produkte-C0/?listorder=asc&listorderby=oxvarminprice&fcIsSearch=1&searchparam=${str}`,
         ebay: `https://ebay.fr/sch/m.html?_ssn=momox&_nkw=${str}&_sop=15`,
-        fnac: `https://www.fnac.com/momox/sref56709E07-6A79-B840-04FC-959AADEC4F19?ItemPerPage=20&PageIndex=1&Search=${str}&ssi=5&sso=1`,
+        fnac: `https://www.fnac.com/SearchResult/ResultList.aspx?SDM=mosaic&Search=${str}&SFilt=119279!206&ssi=5&sso=1`,
         rakuten: `https://fr.shopping.rakuten.com/boutique/momox/kw/${str}`,
         amazon: `https://amazon.fr/s?k=${str}&me=AAD2QYB78YYT9`
     })
@@ -84,13 +83,20 @@
         const str = ev.target.value
         const links = { ...data(str) }
 
-        for (const key in links) !!str ? document.querySelector(`#${key}-link a`).href = links[key] : document.querySelector(`#${key}-link a`).removeAttribute('href')
+        for (const key in links)
+            if (str)
+                document.querySelector(`#${key}-link a`).href = links[key]
+            else
+                document.querySelector(`#${key}-link a`).removeAttribute('href')
 
         document.querySelector('button#openlinks').disabled = !str
     })
 
     /** Callback when button is clicked */
-    document.querySelector('button#openlinks').addEventListener('click', () => document.querySelectorAll('li[id*="-link"] a').forEach(el => window.open(el.href, '_blank')))
+    document.querySelector('button#openlinks').addEventListener(
+        'click',
+        () => document.querySelectorAll('li[id*="-link"] a').forEach(el => window.open(el.href, '_blank')),
+    )
 
     /** Callback when form is submitted */
     document.querySelector('form').addEventListener('submit', ev => {
