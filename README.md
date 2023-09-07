@@ -1,6 +1,6 @@
 # Get Momox links
 
-Useful website that generate for you differents link by a search string to look where Momox is selling for the lowest price your item (for France 🇫🇷)!
+Useful website that generate for you different links by a search string to look where Momox is selling for the lowest price your item (for France 🇫🇷)!
 
 Check it out [here](https://get-momox-links.kiriancaumes.fr/) 👈
 
